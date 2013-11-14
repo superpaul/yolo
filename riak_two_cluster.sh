@@ -58,3 +58,7 @@ for d in dev{1,4}; do
   echo "[info] cluster plan and commit"
   $d/bin/riak-admin cluster plan && $d/bin/riak-admin cluster commit
 done
+
+# name the clusters
+dev1/bin/riak-repl clustername C1
+dev4/bin/riak-repl clustername C2
