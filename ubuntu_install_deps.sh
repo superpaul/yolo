@@ -28,8 +28,7 @@ git clone https://github.com/rtdp/s3curl.git ~/s3curl
 pip install riak
 
 # is java needed?
-echo "Do you need Open JDK for Riak EE?"
-#sudo apt-get install -y openjdk-7-jdk
+echo "Do you need Open JDK for Riak EE? sudo apt-get install -y openjdk-7-jdk"
 echo "Do you need Oracle JRE for Yokozuna?"
 #https://github.com/flexiondotorg/oab-java6
 #http://askubuntu.com/questions/56104/how-can-i-install-sun-oracles-proprietary-java-6-7-jre-or-jdk
