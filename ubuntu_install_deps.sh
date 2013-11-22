@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# dependencies
+# install dependencies
 sudo apt-get update && sudo apt-get install -y \
 curl \
 vim \
@@ -19,10 +19,23 @@ libpam0g-dev \
 libssl0.9.8 \
 s3cmd \
 tidy \
-libdigest-hmac-perl
+libdigest-hmac-perl \
+iperf \
+r-base
 
 # get s3curl from github
 git clone https://github.com/rtdp/s3curl.git ~/s3curl
+
+# 
+echo "Do you need basho bench and erlang source?"
+# get basho bench from github
+#git clone https://github.com/basho/basho_bench.git ~/basho_bench
+# install erlang from source for basho_bench
+#wget http://erlang.org/download/otp_src_R15B01.tar.gz
+#tar zxvf otp_src_R15B01.tar.gz
+#cd otp_src_R15B01
+#./configure && make && sudo make install
+#cd
 
 # install riak python client
 sudo pip install riak
