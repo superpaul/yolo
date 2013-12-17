@@ -47,7 +47,7 @@ if [[ $riak_http_check -ne 200 ]]; then
 else
   let key=$start_key
   while [ $key -le $end_key ]; do
-    echo "DELETE: $bucket/$key"
+    alert_msg i "DELETE - $bucket/$key"
     curl -XDELETE http://$riak_ip:$riak_port/buckets/$bucket/keys/$key
     let key=key+1
   done

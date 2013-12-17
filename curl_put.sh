@@ -39,19 +39,28 @@ else
   exit 1
 fi
 
+if [[ ! -f /tmp/riak_object ]]; then
+  alert_msg i "creating test object"
+  dd if=/dev/urandom of=/tmp/riak_object bs=64k count=1
+fi
+
 riak_http_check="$(curl http://$riak_ip:$riak_port/stats -sI | head -1 | awk '{print $2}')"
 
 if [[ $riak_http_check -ne 200 ]]; then
   alert_msg e "riak not available on $riak_ip:$riak_port"
   exit 1
 else
-  val1="abcdefghijklmnopqrstuvwxyz"
   let key=$start_key
   while [ $key -le $end_key ]; do
-    echo "PUT: http://$riak_ip:$riak_port/buckets/$bucket/key/$key"
+    alert_msg i "PUT - http://$riak_ip:$riak_port/buckets/$bucket/keys/$key"
     curl -XPUT http://$riak_ip:$riak_port/buckets/$bucket/keys/$key \
-         -d "$val1"
+         --data-binary @/tmp/riak_object
     let key=key+1
     sleep 0.1s
   done
+fi
+
+if [[ -f /tmp/riak_object ]]; then
+  alert_msg i "deleting test object"
+  rm /tmp/riak_object
 fi

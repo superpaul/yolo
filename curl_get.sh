@@ -47,7 +47,7 @@ if [[ $riak_http_check -ne 200 ]]; then
 else
   let key=$start_key
   while [ $key -le $end_key ]; do
-    echo "GET: $bucket/$key"
+    alert_msg i "GET - $bucket/$key"
     curl http://$riak_ip:$riak_port/buckets/$bucket/keys/$key
     echo ""
     let key=key+1
