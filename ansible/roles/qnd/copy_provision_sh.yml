@@ -1,0 +1,8 @@
+---
+- hosts: bb_cluster
+  gather_facts: False
+  sudo: True
+  tasks:
+
+  - name: Copy provision script to nodes
+    copy: src=files/provision.sh dest=/tmp/provision.sh owner=root group=root mode=0744
