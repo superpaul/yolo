@@ -52,5 +52,6 @@ else
     curl -XPUT http://$riak_ip:$riak_port/buckets/$bucket/keys/$key \
          -d "$val1"
     let key=key+1
+    sleep 0.1s
   done
 fi

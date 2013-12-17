@@ -49,6 +49,8 @@ else
   while [ $key -le $end_key ]; do
     echo "GET: $bucket/$key"
     curl http://$riak_ip:$riak_port/buckets/$bucket/keys/$key
+    echo ""
     let key=key+1
+    sleep 0.1s
   done
 fi
