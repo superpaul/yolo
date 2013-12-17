@@ -1,0 +1,12 @@
+---
+- name: Create groups based on distribution
+  group_by: key={{ ansible_distribution }}
+
+- name: SSH keys dbrown
+  shell: echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPZp2O/JAwU6h5rMWd+2hdP7HyV0b7qAT2mI4yk29obyiC4QhRhDRIY4aFg48Cz6+QpYC8Spg5Rfg7ns1bet6b7h9wQzmRm3b93h7YE9QV8bfvYa2m3sAecXyWofD+5/iOE2gTRBYtOu3ygIvU3FZ98vh//fMgvMwTuGMqyeByjH2NAbPf2lSaFAfyvEnk+9aEGVmGc82I5nPjpKEZId0wVTcSHMMmqfuO5xgqMPNKBHMDV0sHX3RTHyCepCml9e87g1VMwndEhN/OTnvog36rYaaKnEnKD3sx47beiQq5dx45Nl9c6jMroNk7fOeyhms33s2hvZ8GtRtI7r7hvOiL dbrown@basho.com" >> ~/.ssh/authorized_keys
+
+- name: SSH keys ttyree
+  shell: echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDxTb+Vs4B1kf554SSkNN8tdtJawcFp9q9jdPOu0Ql1t8N9Nc0pq1LcHGRmSfGmBDDi5w5ZttCOEh5y6Vvk8KT8qkPvcJxj5uPUk+TW80aEUuMiZiwdZh0IbRxtfeqXa0eYjuvkDlkVtng77hiqVhP6cGfrpCbok8Vjt1YmklBwG+GYO07JR1V+Ggpw37ymYaRpuMs9oAhb7/yz45OY+KK7J57JjN0LGe6c0VthQGTNfkdcCKp6DfpisZs1L5O514WpLCuKzyYBIqs4GYluBLDCGaDKk8rGFb3R/zLMoQEiDEx59zKSMY9RbnRb1mdZWEjt26HQquqAodgjYgzqb1dX todd@basho.com" >> ~/.ssh/authorized_keys
+
+- name: SSH keys cdhalqvist
+  shell: echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC26Vq/Okk01cYYWyxZid7K28K2pBQ8enFKrsqydl9uMTj4vMqjmRCSU8kdpO0+dL/irDB1Rbu2TmYQgB+r1gNR8RisGO4OtcIrfvbRuW3hw5uhAFElhuvcwMjJAtt6WaTfYtGnu1C4/nhmwQUAVPvPmwnHkDYrpE+S/ZlAqHaz5IyFP5zy8Rwg+FG5sfdq8tiHFHqxmElnfZL0B52HDOcZgnMjjbQZgGhM7C5qsud4gRIeiSj5nO5JsMFczMdWEGdYvgTcO/Vst3+Hume7xt45hsyyUL6Nm10+2wQmdUouP+r6knrnFlUKGqzwVMszj5i7KNnYdyoE/SFnjOsYEaz9 christian@basho.com" >> ~/.ssh/authorized_keys
