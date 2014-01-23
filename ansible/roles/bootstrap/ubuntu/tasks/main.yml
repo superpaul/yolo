@@ -1,8 +1,0 @@
----
-- name: Update apt
-  sudo: True
-  command: apt-get update
-
-- name: Install common dependencies
-  sudo: True
-  command: apt-get install -y build-essentials curl git iperf openssl tidy vim

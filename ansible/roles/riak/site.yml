@@ -1,3 +1,0 @@
----
-- include: setup_riak_ee.yml
-- include: form_cluster.yml
