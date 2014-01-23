@@ -21,7 +21,9 @@ s3cmd \
 tidy \
 libdigest-hmac-perl \
 iperf \
-r-base
+r-base \
+ruby1.9.1 \
+ruby1.9.1-dev
 
 # get s3curl from github
 git clone https://github.com/rtdp/s3curl.git ~/s3curl
