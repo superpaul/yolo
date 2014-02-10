@@ -1,0 +1,45 @@
+---
+- hosts: riak
+  remote_user: vagrant
+  sudo: yes
+  tasks:
+    - name: update apt cache if stale
+      apt: update_cache=yes cache_valid_time=3600
+    - name: install bootstrap dependencies
+      apt: pkg={{ item }}
+      with_items:
+        - build-essential
+        - curl
+        - fop
+        - git
+        - iperf
+        - libc6-dev-i386
+        - libdigest-hmac-perl
+        - libncurses5-dev
+        - libpam0g-dev
+        - libssl0.9.8
+        - libssl-dev
+        - maven
+        - openjdk-6-jdk
+        - openssl
+        - python-pip
+        - python-pycurl
+        - python-apt
+        - ruby1.9.1
+        - ruby1.9.1-dev
+        - r-base
+        - s3cmd
+        - tidy
+        - unixodbc-dev
+        - vim
+        - xsltproc
+    - name: install riak python client libraries
+      pip: name=riak
+    - name: install basho key
+      apt_key: url=http://apt.basho.com/gpg/basho.apt.key state=present
+    - name: add basho repository
+      apt_repository: repo='deb http://apt.basho.com {{ ansible_distribution_release }} main' update_cache=yes
+    - name: set ulimits
+      debug: msg="set ulimits"
+    - name: configure sysctl
+      debug: msg="configure sysctl"
