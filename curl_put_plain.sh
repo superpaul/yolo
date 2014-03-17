@@ -1,21 +1,5 @@
 #!/usr/bin/env bash
 
-function alert_msg() {
-  case $1 in
-    "u" )
-      alert="usage"
-      ;;
-    "i" )
-      alert="info"
-      ;;
-    "e" )
-      alert="error"
-      ;;
-  esac
-  message="$2"  
-  echo "$alert: $message"
-}
-
 base_dir=$(dirname $0)
 http_ip="$1"
 http_port="$2"
@@ -23,34 +7,31 @@ bucket="$3"
 start_key="$4"
 end_key="$5"
 
-# check end_key is > start_key
+# Check end_key is > start_key
 if [[ $start_key -gt $end_key ]]; then
-  alert_msg e "<first_key> must be less than <last_key>"
-  alert_msg u "$0 <riak_ip> <riak_port> <bucket> <first_key> <last_key>"
+  echo "ERROR: <first_key> must be less than <last_key>"
   exit 1
 fi
 
-if [[ $http_port -gt 1024 ]]; then
-  riak_ip="$http_ip"
-  riak_port="$http_port"
-else
-  alert_msg e "riak port must be above 1024"
-  alert_msg u "$0 <riak_ip> <riak_port> <bucket> <first_key> <last_key>"
-  exit 1
-fi
-
+# Check Riak stats returns 200
 riak_http_check="$(curl http://$riak_ip:$riak_port/stats -sI | head -1 | awk '{print $2}')"
 
+# If Riak is up run PUT loop
 if [[ $riak_http_check -ne 200 ]]; then
-  alert_msg e "riak not available on $riak_ip:$riak_port"
+  echo "ERROR: Riak is not available at $riak_ip:$riak_port"
   exit 1
 else
   let key=$start_key
+  riak_ip="$http_ip"
+  riak_port="$http_port"
   while [ $key -le $end_key ]; do
-    alert_msg i "PUT - http://$riak_ip:$riak_port/buckets/$bucket/keys/$key"
+    echo "INFO: PUT - http://$riak_ip:$riak_port/buckets/$bucket/keys/$key"
     curl -XPUT http://$riak_ip:$riak_port/buckets/$bucket/keys/$key \
          -d "	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     let key=key+1
-    sleep 0.1s
   done
+  exit 0
 fi
+
+# Echo usage
+echo "INFO: $0 <riak_ip> <riak_port> <bucket> <first_key> <last_key"
