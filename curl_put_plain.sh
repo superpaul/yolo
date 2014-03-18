@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 base_dir=$(dirname $0)
-http_ip="$1"
-http_port="$2"
+riak_ip="$1"
+riak_port="$2"
 bucket="$3"
 start_key="$4"
 end_key="$5"
@@ -22,12 +22,10 @@ if [[ $riak_http_check -ne 200 ]]; then
   exit 1
 else
   let key=$start_key
-  riak_ip="$http_ip"
-  riak_port="$http_port"
   while [ $key -le $end_key ]; do
     echo "INFO: PUT - http://$riak_ip:$riak_port/buckets/$bucket/keys/$key"
     curl -XPUT http://$riak_ip:$riak_port/buckets/$bucket/keys/$key \
-         -d "	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+         -d "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     let key=key+1
   done
   exit 0
