@@ -62,7 +62,7 @@ if [ $start_key -gt $end_key ]; then
   exit 1
 fi
 
-# Run DELETE loop
+# Run PUT loop
 let key=$start_key
 while [ $key -le $end_key ]; do
   echo "INFO: PUT - http://$riak_ip:$riak_port/buckets/$bucket/keys/$key"

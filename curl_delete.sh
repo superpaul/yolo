@@ -11,18 +11,20 @@ end_key="100"
 usage()
 {
 cat << EOF
-USAGE: $0 -s <riak_ip> -p <riak_port> -b <bucket> <first_key> <last_key>
+USAGE: $0 -s <riak_ip> -p <riak_port> -b <bucket> -f <first_key> -l <last_key>
 
 OPTIONS:
   -h      Show this message
   -s      Riak IP
   -p      Riak port
   -b      Bucket
+  -f      First key
+  -l      Last key
 EOF
 }
 
 # Get options
-while getopts "hs:p:b:" option;
+while getopts "hs:p:b:f:l:" option;
 do
   case $option in
     h)
@@ -37,6 +39,12 @@ do
     ;;
     b)
       bucket=$OPTARG
+    ;;
+    f)
+      start_key=$OPTARG
+    ;;
+    l)
+      end_key=$OPTARG
     ;;
   esac
 done
