@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-
 ##
 ## only support default 5 node cluster at the moment
 ##
 
-riak_version="riak-1.4.3"
+riak_version="riak-1.4.12"
+riak_node_count=4
 
 # make sure you're home
 if [ $(pwd) != "$HOME" ]; then
@@ -16,15 +16,10 @@ fi
 # add symlinks for the dev nodes to the below dir
 devlink_dir="$HOME"
 echo "[info] creating dev node symlinks in $devlink_dir"
-for d in dev{1..5}; do ln -s $riak_version/dev/$d $d; done
+for n in $(seq 1 ${riak_node_count}); do ln -s $riak_version/dev/dev${n} dev${n}; done
 
 devrel_devnodes=$(ls $devlink_dir | grep ^dev[0-9] | wc -l)
-if [ $devrel_devnodes -lt 5 ]; then
-  echo "[error] only $devrel_devnodes nodes found at $devlink_dir"
-  exit 1
-else
-  echo "[info] $devrel_devnodes nodes found at $devlink_dir"
-fi
+echo "[info] $devrel_devnodes nodes found at $devlink_dir"
 
 function riak_create_cluster() {
   # if no nodes are found in home dir attempt to build links
@@ -34,9 +29,9 @@ function riak_create_cluster() {
   riak_control start
   sleep 3
   # join nodes
-  for d in dev{2..5}; do
-    echo "[info] joining $d to cluster"
-    $d/bin/riak-admin cluster join dev1@127.0.0.1
+  for n in $(seq 2 ${riak_node_count}); do
+    echo "[info] joining dev${n} to cluster"
+    dev${n}/bin/riak-admin cluster join dev1@127.0.0.1
   done
   sleep 4
   # cluster plan and commit
@@ -45,16 +40,17 @@ function riak_create_cluster() {
 }
 
 function riak_control() {
-  for d in dev{1..5}; do
-    echo "[info] $1ing $d"
-    $devlink_dir/$d/bin/riak $1
-    echo "[info] pinging $d"
-    $devlink_dir/$d/bin/riak ping
+  for n in $(seq 1 ${riak_node_count}); do
+    echo "[info] $1ing dev${n}"
+    $devlink_dir/dev${n}/bin/riak $1
+    echo "[info] pinging dev${n}"
+    $devlink_dir/dev${n}/bin/riak ping
   done
 }
 
 function riak_status() {
-  ./riak_check_beams.sh
+  #./riak_check_beams.sh
+  ps -ef | grep 'beam' | grep -v 'grep' | awk '{print $2" "$8}'
 }
 
 case $1 in
