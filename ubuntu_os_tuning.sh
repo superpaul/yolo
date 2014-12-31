@@ -5,7 +5,7 @@ sudo sh -c 'echo \
 "* soft nofile 131072
 * hard nofile 131072
 root soft nofile 131072
-root hard nofile 131072 \
+root hard nofile 131072" \
 >> /etc/security/limits.conf'
 
 sudo sh -c 'echo \
