@@ -6,12 +6,15 @@ import boto.ec2
 # set some variables
 # move these to arguments
 REGION='eu-west-1'
-AMI='ami-ce7b6fba'
-MIN_COUNT=1
-MAX_COUNT=1
-KEY_NAME='dbrown_aws'
-SECURITY_GROUPS
-INSTANCE_TYPE='m1.small'
+#AMI='ami-ce7b6fba' # amazon ubuntu AMI
+#AMI='ami-e3e73394' # Bryan's Riak Ops Training AMI
+#AMI='ami-3804aa4f' # William Hill OPS AMI
+AMI='ami-84a802f3' # William Hill DEV AMI
+MIN_COUNT=13
+MAX_COUNT=13
+KEY_NAME='training'
+SECURITY_GROUPS=''
+INSTANCE_TYPE='m3.medium'
 
 # connect to region
 conn = boto.ec2.connect_to_region(REGION)
@@ -22,5 +25,5 @@ conn.run_instances(
 	min_count=MIN_COUNT,
 	max_count=MAX_COUNT,
 	key_name=KEY_NAME,
-	security_groups=['default'],
+	security_groups=['default','riak'],
 	instance_type=INSTANCE_TYPE)
