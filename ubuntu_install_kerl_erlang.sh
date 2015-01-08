@@ -30,8 +30,8 @@ sudo chmod a+x /usr/local/bin/kerl
 
 # install erlang R15B01
 kerl build git git://github.com/basho/otp.git OTP_R15B01 R15B01
-kerl install R15B01 ~/erlang/r15b01
-#. ~/erlang/r15b01/activate
+kerl install R15B01 ~/erlang/R15B01
+#. ~/erlang/R15B01/activate
 
 # install basho version of erlang R16B02
 kerl build git git://github.com/basho/otp.git OTP_R16B02_basho5 R16B02-basho5
