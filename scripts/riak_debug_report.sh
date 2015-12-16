@@ -5,7 +5,7 @@ function clean_debug_dirs {
 }
 
 function load_debug_array {
-	debug_array=($(find . -type d -name "*debug")) # load debug folders in to array
+	debug_array=($(find . -type d -name "*riak-debug*")) # load debug folders in to array
 }
 
 function find_keyword {
@@ -106,8 +106,10 @@ function check_processors_versus_erlang_s {
 	for debug_node in ${debug_array[@]}
 		do
 			processor_count=$(find $debug_node -name "cpuinfo" | grep -v /.info | xargs grep -c "processor")
+			echo "Processor Count"
 			echo "${debug_node}: $processor_count"
 		done
+	echo "Scheduler Configuration"
 	find_keyword "vm.args" "^+S"
 }
 
@@ -158,7 +160,7 @@ find_keyword "sysctl" "fs.file-max"
 
 
 find_keyword "console.log*" "large"
-find_keyword "console.log*" "siblings"
+find_keyword "console.log*" "siblings" 
 find_keyword "console.log*" "compaction"
 
 

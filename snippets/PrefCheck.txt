@@ -1,0 +1,14 @@
+PrefCheck = fun(TargetNval) ->
+{ok,Ring} = riak_core_ring_manager:get_my_ring(),
+Preflists = riak_core_ring:all_preflists(Ring,TargetNval),
+lists:foldl(
+fun(Preflist,{T,L}) -> 
+{_Indexes,Owners} = lists:unzip(Preflist),
+case (length(Owners) == length(lists:usort(Owners))) of
+true ->
+{T+1, L};
+false ->
+{T+1, [{T+1,Preflist} | L ]}
+end
+end,{0,[]},Preflists)
+end.
